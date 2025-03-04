@@ -18,7 +18,6 @@ namespace AdminPageServer.PL.Controllers
         private readonly ILogger<WeaponsItemsController> logger;
         private readonly IWeaponsItemRepository weapons;
 
-
         public WeaponsItemsController(ILogger<WeaponsItemsController> logger, IWeaponsItemRepository weapons)
         {
             this.logger = logger;
@@ -38,6 +37,21 @@ namespace AdminPageServer.PL.Controllers
             }
         }
 
+        [AllowAnonymous]
+        [HttpGet("client-models", Name = "GetWeaponsCards")]
+        public ActionResult<IEnumerable<WeaponsCardDto>> GetWeaponsCards()
+        {
+            try
+            {
+                return Ok(weapons.getCardsDto());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(getException(ex));
+            }
+        }
+
+        [AllowAnonymous]
         [HttpGet("model/{model}", Name = "GetWeaponsCardDtoById")]
         public ActionResult<WeaponsCardDto> GetWeaponsCardDtoById([FromRoute] string? model)
         {         
@@ -89,20 +103,6 @@ namespace AdminPageServer.PL.Controllers
                 weapons.deleteWeaponsData(model);
 
                 return Ok(201);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(getException(ex));
-            }
-        }
-
-        [AllowAnonymous]
-        [HttpGet("client-models", Name = "GetWeaponsCards")]
-        public ActionResult<IEnumerable<WeaponsCardDto>> GetWeaponsCards()
-        {
-            try
-            {
-                return Ok(weapons.getCardsDto());
             }
             catch (Exception ex)
             {
