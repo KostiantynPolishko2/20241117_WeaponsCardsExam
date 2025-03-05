@@ -9,7 +9,7 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<AuthDbContext>(configure => configure.UseSqlServer(builder.Configuration.GetConnectionString("AzureSqlDbAuth")));
+builder.Services.AddDbContext<AuthDbContext>(configure => configure.UseSqlServer(builder.Configuration.GetConnectionString("SmartAspNetAuth")));
 builder.Services.AddControllers();
 
 // For Identity

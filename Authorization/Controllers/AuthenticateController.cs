@@ -30,7 +30,7 @@ namespace Authorization.Controllers
         [Route("login")] 
         public async Task<ActionResult<string>> Login([FromBody] LoginModel model) { 
             var user = await _userManager.FindByNameAsync(model.Username!);
-            
+
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password!)) { 
                 var userRoles = await _userManager.GetRolesAsync(user); 
                 var authClaims = new List<Claim> { new Claim(ClaimTypes.Name, user.UserName!), new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())}; 
